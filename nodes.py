@@ -21,6 +21,10 @@ from easyanimate.utils.lora_utils import merge_lora, unmerge_lora
 from easyanimate.utils.utils import save_videos_grid
 from einops import rearrange
 
+checkpoints=['None']
+checkpoints.extend(folder_paths.get_filename_list("checkpoints"))
+
+
 class EasyAnimateLoader:
     @classmethod
     def INPUT_TYPES(cls):
@@ -32,8 +36,9 @@ class EasyAnimateLoader:
                 "device":(["cuda","cpu"],{"default":"cuda"}),
             },
             "optional": {
-                "transformer_ckpt": (folder_paths.get_filename_list("checkpoints"), {"default": None}),
-                "lora_ckpt": (folder_paths.get_filename_list("checkpoints"), {"default": None}),
+                "transformer_ckpt": (checkpoints, {"default": 'None'}),
+                "lora_ckpt": (checkpoints, {"default": 'None'}),
+                "lora_weight": ("FLOAT", {"default": 0.55}),
             }
         }
 
@@ -41,7 +46,7 @@ class EasyAnimateLoader:
     FUNCTION = "run"
     CATEGORY = "EasyAnimate"
 
-    def run(self,pixart_path,motion_ckpt,sampler_name,device,transformer_ckpt=None,lora_ckpt=None):
+    def run(self,pixart_path,motion_ckpt,sampler_name,device,transformer_ckpt='None',lora_ckpt='None',lora_weight=0.55):
         pixart_path=os.path.join(folder_paths.get_folder_paths("diffusers")[0],pixart_path)
         # Config and model path
         config_path         = f"{easyanimate_path}/config/easyanimate_video_motion_module_v1.yaml"
@@ -53,20 +58,20 @@ class EasyAnimateLoader:
 
         # Load pretrained model if need
         transformer_path    = None
-        if transformer_ckpt is not None:
+        if transformer_ckpt!='None':
             transformer_path    = folder_paths.get_full_path("checkpoints", transformer_ckpt)
         motion_module_path = folder_paths.get_full_path("checkpoints", motion_ckpt)
         #motion_module_path  = "models/Motion_Module/easyanimate_v1_mm.safetensors" 
         vae_path            = None
         lora_path           = None
-        if lora_ckpt is not None:
+        if lora_ckpt!='None':
             lora_path    = folder_paths.get_full_path("checkpoints", lora_ckpt)
 
         weight_dtype        = torch.float16
         guidance_scale      = 6.0
         seed                = 43
         num_inference_steps = 30
-        lora_weight         = 0.55
+        #lora_weight         = 0.55
 
         config = OmegaConf.load(config_path)
 
