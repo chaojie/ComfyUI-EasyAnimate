@@ -206,6 +206,7 @@ class EasyAnimatePipeline(DiffusionPipeline):
                 If `True`, the function will preprocess and clean the provided caption before encoding.
             max_sequence_length (`int`, defaults to 120): Maximum sequence length to use for the prompt.
         """
+        #self.text_encoder.to('cuda')
 
         if "mask_feature" in kwargs:
             deprecation_message = "The use of `mask_feature` is deprecated. It is no longer used in any computation and that doesn't affect the end results. It will be removed in a future version."
@@ -304,6 +305,7 @@ class EasyAnimatePipeline(DiffusionPipeline):
         else:
             negative_prompt_embeds = None
             negative_prompt_attention_mask = None
+        #self.text_encoder.to('cpu')
 
         return prompt_embeds, prompt_attention_mask, negative_prompt_embeds, negative_prompt_attention_mask
 
@@ -541,6 +543,7 @@ class EasyAnimatePipeline(DiffusionPipeline):
         return latents
 
     def decode_latents(self, latents):
+        self.vae.to('cuda')
         video_length = latents.shape[2]
         latents = 1 / 0.18215 * latents
         if self.vae.quant_conv.weight.ndim==5:
@@ -589,6 +592,7 @@ class EasyAnimatePipeline(DiffusionPipeline):
         video = (video / 2 + 0.5).clamp(0, 1)
         # we always cast to float32 as this does not cause significant overhead and is compatible with bfloa16
         video = video.cpu().float().numpy()
+        self.vae.to('cpu')
         return video
 
     @torch.no_grad()

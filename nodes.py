@@ -150,8 +150,12 @@ class EasyAnimateLoader:
             scheduler=scheduler,
             torch_dtype=weight_dtype
         )
-        pipeline.to(device)
+        #pipeline.to(device)
         pipeline.enable_model_cpu_offload()
+
+        pipeline.transformer.to(device)
+        pipeline.text_encoder.to('cpu')
+        pipeline.vae.to('cpu')
 
         if lora_path is not None:
             pipeline = merge_lora(pipeline, lora_path, lora_weight)
