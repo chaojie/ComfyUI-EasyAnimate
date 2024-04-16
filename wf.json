@@ -3,44 +3,6 @@
   "last_link_id": 7,
   "nodes": [
     {
-      "id": 8,
-      "type": "EasyAnimateLoader",
-      "pos": [
-        -31,
-        -3
-      ],
-      "size": {
-        "0": 315,
-        "1": 202
-      },
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "outputs": [
-        {
-          "name": "EasyAnimateModel",
-          "type": "EasyAnimateModel",
-          "links": [
-            7
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "EasyAnimateLoader"
-      },
-      "widgets_values": [
-        "PixArt-XL-2-512x512",
-        "easyanimate_v1_mm.safetensors",
-        "DPM++",
-        "cuda",
-        "None",
-        "None",
-        0.55
-      ]
-    },
-    {
       "id": 2,
       "type": "EasyAnimateRun",
       "pos": [
@@ -85,6 +47,45 @@
         6,
         1829,
         "fixed"
+      ]
+    },
+    {
+      "id": 8,
+      "type": "EasyAnimateLoader",
+      "pos": [
+        -31,
+        -3
+      ],
+      "size": {
+        "0": 315,
+        "1": 226
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "EasyAnimateModel",
+          "type": "EasyAnimateModel",
+          "links": [
+            7
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EasyAnimateLoader"
+      },
+      "widgets_values": [
+        "PixArt-XL-2-512x512",
+        "easyanimate_v1_mm.safetensors",
+        "DPM++",
+        "cuda",
+        "PixArt-Sigma-XL-2-1024-MS.pth",
+        "None",
+        "None",
+        0.55
       ]
     },
     {
@@ -143,7 +144,7 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "AnimateDiff_00451.mp4",
+            "filename": "AnimateDiff_00461.mp4",
             "subfolder": "",
             "type": "output",
             "format": "video/h264-mp4"
