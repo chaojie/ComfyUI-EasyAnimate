@@ -23,7 +23,8 @@ from einops import rearrange
 
 checkpoints=['None']
 checkpoints.extend(folder_paths.get_filename_list("checkpoints"))
-
+vaes=['None']
+vaes.extend(folder_paths.get_filename_list("vae"))
 
 class EasyAnimateLoader:
     @classmethod
@@ -38,7 +39,8 @@ class EasyAnimateLoader:
             "optional": {
                 "transformer_ckpt": (checkpoints, {"default": 'None'}),
                 "lora_ckpt": (checkpoints, {"default": 'None'}),
-                "lora_weight": ("FLOAT", {"default": 0.55}),
+                "vae_ckpt": (vaes, {"default": 'None'}),
+                "lora_weight": ("FLOAT", {"default": 0.55, "min": 0, "max": 1, "step": 0.01}),
             }
         }
 
@@ -46,7 +48,7 @@ class EasyAnimateLoader:
     FUNCTION = "run"
     CATEGORY = "EasyAnimate"
 
-    def run(self,pixart_path,motion_ckpt,sampler_name,device,transformer_ckpt='None',lora_ckpt='None',lora_weight=0.55):
+    def run(self,pixart_path,motion_ckpt,sampler_name,device,transformer_ckpt='None',lora_ckpt='None',vae_ckpt='None',lora_weight=0.55):
         pixart_path=os.path.join(folder_paths.get_folder_paths("diffusers")[0],pixart_path)
         # Config and model path
         config_path         = f"{easyanimate_path}/config/easyanimate_video_motion_module_v1.yaml"
@@ -63,6 +65,8 @@ class EasyAnimateLoader:
         motion_module_path = folder_paths.get_full_path("checkpoints", motion_ckpt)
         #motion_module_path  = "models/Motion_Module/easyanimate_v1_mm.safetensors" 
         vae_path            = None
+        if vae_ckpt!='None':
+            vae_path    = folder_paths.get_full_path("vae", vae_ckpt)
         lora_path           = None
         if lora_ckpt!='None':
             lora_path    = folder_paths.get_full_path("checkpoints", lora_ckpt)
