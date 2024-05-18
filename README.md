@@ -2,7 +2,7 @@
 
 ## workflow
 
-[basic](https://github.com/chaojie/ComfyUI_EasyAnimate/blob/main/workflow/wf.json)
+[basic](https://github.com/chaojie/ComfyUI_EasyAnimate/blob/main/wf.json)
 
 <img src="wf.png" raw=true>
 
