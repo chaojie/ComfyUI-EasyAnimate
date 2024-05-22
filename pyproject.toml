@@ -1,0 +1,15 @@
+[project]
+name = "comfyui-easyanimate"
+description = "ComfyUI-EasyAnimate"
+version = "1.0.0"
+license = "LICENSE"
+dependencies = ["Pillow", "einops", "safetensors", "timm", "tomesd", "xformers", "decord", "datasets", "numpy", "scikit-image", "opencv-python", "omegaconf", "diffusers", "transformers"]
+
+[project.urls]
+Repository = "https://github.com/chaojie/ComfyUI-EasyAnimate"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "ComfyUI-EasyAnimate"
+Icon = ""
